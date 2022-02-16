@@ -1,0 +1,38 @@
+<mat-label class="ds-label" *ngIf="label">
+  <span>{{ label }}</span>
+  <span *ngIf="required">&nbsp;*</span>
+</mat-label>
+<mat-form-field
+  appearance="outline"
+  class="ds-form"
+  [class.readonly]="readonly"
+>
+  <input
+    matInput
+    [attr.autocomplete]="autocomplete"
+    [formControl]="$any(control)"
+    [type]="type"
+    [placeholder]="placeholder"
+    [maxlength]="$any(maxlength)"
+  />
+  <mat-icon *ngIf="prefixIcon" matPrefix>{{ prefixIcon }}</mat-icon>
+  <mat-hint>
+    <ng-content></ng-content>
+  </mat-hint>
+  <mat-error *ngIf="control?.hasError('required')"
+    >This field is required</mat-error
+  >
+  <mat-error *ngIf="control?.hasError('minlength')">
+    <ng-container *ngIf="control?.getError('minlength') as error">
+      Use at least {{ error.requiredLength }} characters
+    </ng-container>
+  </mat-error>
+  <mat-error *ngIf="control?.hasError('maxlength')">
+    <ng-container *ngIf="control?.getError('maxlength') as error">
+      Use {{ error.requiredLength }} characters max
+    </ng-container>
+  </mat-error>
+  <mat-error *ngIf="control?.hasError('phoneNumber')"
+    >Invalid phone number format</mat-error
+  >
+</mat-form-field>
